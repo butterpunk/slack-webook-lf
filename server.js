@@ -42,7 +42,10 @@ express()
       res.json(200, todos);
     });
   })
-
+  .post('/api/hook', function (req,res) {
+    console.log('we here and all good');
+    res.json(200, {"text": "we good"});
+  })
   .post('/api/todos', function (req, res) {
     var todo = new Todo( req.body );
     todo.id = todo._id;
