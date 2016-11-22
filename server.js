@@ -19,11 +19,10 @@ var express  = require('express'),
  * Feel free to use it while you’re learning.
  * After that, create and use your own credential.
  * Thanks.
- *
- * MONGOLAB_URI=mongodb://example:example@ds053312.mongolab.com:53312/todolist
- * 'mongodb://example:example@ds053312.mongolab.com:53312/todolist'
  */
-mongoose.connect(process.env.MONGOLAB_URI, function (error) {
+mongo=process.env.MONGODB_URI
+
+mongoose.connect(mongo, function (error) {
     if (error) console.error(error);
     else console.log('mongo connected');
 });
