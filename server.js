@@ -32,11 +32,12 @@ express()
   .use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 
   .post('/api/hook', function (req,res) {
+    /*
       var todo = new Todo( req.body );
       console.log('we are in the post hook function');
       todo.save(function (err) {
         res.json(200, todo);
-      });
+      });*/
   })
 
   .get('/api/hook', function (req,res) {
