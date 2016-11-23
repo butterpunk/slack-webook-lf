@@ -6,10 +6,9 @@ var express  = require('express'),
     bodyParser = require('body-parser'),
 
     // Mongoose Schema definition
-    Schema = new mongoose.Schema({
-      id       : String, 
-      title    : String,
-      completed: Boolean
+    Schema = new mongoose.Schema({ 
+      timestamp: Number,
+      text: String
     }),
 
     Todo = mongoose.model('Todo', Schema);
@@ -32,62 +31,22 @@ express()
   .use(bodyParser.json()) // support json encoded bodies
   .use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 
-  .get('/api', function (req, res) {
-    res.json(200, {msg: 'OK' });
-  })
-
-  .get('/api/todos', function (req, res) {
-    // http://mongoosejs.com/docs/api.html#query_Query-find
-    Todo.find( function ( err, todos ){
-      res.json(200, todos);
-    });
-  })
   .post('/api/hook', function (req,res) {
-    console.log('we here and all good');
-  })
-  .post('/api/todos', function (req, res) {
-    var todo = new Todo( req.body );
-    todo.id = todo._id;
-    // http://mongoosejs.com/docs/api.html#model_Model-save
-    todo.save(function (err) {
-      res.json(200, todo);
-    });
-  })
-
-  .del('/api/todos', function (req, res) {
-    // http://mongoosejs.com/docs/api.html#query_Query-remove
-    Todo.remove({ completed: true }, function ( err ) {
-      res.json(200, {msg: 'OK'});
-    });
-  })
-
-  .get('/api/todos/:id', function (req, res) {
-    // http://mongoosejs.com/docs/api.html#model_Model.findById
-    Todo.findById( req.params.id, function ( err, todo ) {
-      res.json(200, todo);
-    });
-  })
-
-  .put('/api/todos/:id', function (req, res) {
-    // http://mongoosejs.com/docs/api.html#model_Model.findById
-    Todo.findById( req.params.id, function ( err, todo ) {
-      todo.title = req.body.title;
-      todo.completed = req.body.completed;
-      // http://mongoosejs.com/docs/api.html#model_Model-save
-      todo.save( function ( err, todo ){
+      var todo = new Todo( req.body );
+      console.log('we are in the post hook function');
+      todo.save(function (err) {
         res.json(200, todo);
       });
-    });
   })
 
-  .del('/api/todos/:id', function (req, res) {
-    // http://mongoosejs.com/docs/api.html#model_Model.findById
-    Todo.findById( req.params.id, function ( err, todo ) {
-      // http://mongoosejs.com/docs/api.html#model_Model.remove
-      todo.remove( function ( err, todo ){
-        res.json(200, {msg: 'OK'});
-      });
-    });
+  .get('/api/hook', function (req,res) {
+      Todo.find(function(err, tods){
+          console.log('in the get function');
+          if (err)
+            res.send(err);
+
+          res.json(tods);
+      })
   })
 
   .use(express.static(__dirname + '/'))
