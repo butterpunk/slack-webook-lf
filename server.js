@@ -27,16 +27,16 @@ express()
   .use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 
   .post('/api/hook', function (req,res) {
-      var todo = new Todo();
-      todo.timestamp = req.body.timestamp;
-      todo.text = req.body.text;
-      console.log('we are in the post hook function');
-      todo.save(function (err) {
-        if(err)
-          res.send(err);
+      // var todo = new Todo();
+      // todo.timestamp = req.body.timestamp;
+      // todo.text = req.body.text;
+      // console.log('we are in the post hook function');
+      // todo.save(function (err) {
+      //   if(err)
+      //     res.send(err);
 
-          res.json({"text": "Your message was archived on our alexa server."});
-      });
+      //     res.json({"text": "Your message was archived on our alexa server."});
+      // });
   })
 
   .get('/api/hook', function (req,res) {
